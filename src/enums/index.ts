@@ -1,1 +1,1 @@
-export * as MessageAuthor from "../enums/_authors";
+export * as AuthorType from './author_type';

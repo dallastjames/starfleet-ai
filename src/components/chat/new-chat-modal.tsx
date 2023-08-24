@@ -1,5 +1,5 @@
-import { createSignal } from "solid-js";
-import { dialogHideModalClick } from "../../utils/modal";
+import { createSignal } from 'solid-js';
+import { dialogHideModalClick } from '../../utils/modal';
 
 export function NewChatModal({
   modalId,
@@ -8,17 +8,17 @@ export function NewChatModal({
   modalId: string;
   onCreate: (name: string) => void;
 }) {
-  const [name, setName] = createSignal("");
+  const [name, setName] = createSignal('');
 
   function handleCreate() {
     if (!name()) return;
     dialogHideModalClick(modalId)();
     onCreate(name());
-    setName("");
+    setName('');
   }
 
   function checkForKeyboardSubmit(e: KeyboardEvent) {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault();
       handleCreate();
     }
@@ -27,13 +27,13 @@ export function NewChatModal({
   return (
     <dialog id={modalId} class="modal">
       <div class="modal-box">
-        <h3 class="text-xl mb-4">Create New Chat</h3>
+        <h3 class="mb-4 text-xl">Create New Chat</h3>
         <input
           type="text"
           class="input input-bordered w-full"
           placeholder="Chat Name"
           value={name()}
-          onInput={(e) => setName(e.currentTarget.value)}
+          onInput={e => setName(e.currentTarget.value)}
           onKeyDown={checkForKeyboardSubmit}
         />
         <div class="modal-action">
