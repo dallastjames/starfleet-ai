@@ -11,9 +11,11 @@
     "supabase:reset": "supabase db reset && pnpm supabase:types:local",
     "supabase:types:linked": "supabase gen types typescript --linked > src/utils/database.ts &&  pnpm pretty-types",
     "supabase:types:local": "supabase gen types typescript --local > src/utils/database.ts && pnpm pretty-types",
-    "pretty-types": "prettier --write src/utils/database.ts"
+    "pretty-types": "prettier --write src/utils/database.ts",
+    "supabase:functions:deploy": "supabase functions deploy --import-map ./supabase/functions/import-map.json"
   },
   "dependencies": {
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@solidjs/router": "^0.8.3",
     "@supabase/supabase-js": "^2.33.1",
     "clsx": "^2.0.0",
