@@ -3,32 +3,43 @@ import { useChatContext } from './chat-context';
 import { ChatAIMessage } from './ai-message';
 import { ChatHumanMessage } from './human-message';
 import { AuthorType } from '../../enums';
-import { realtimeChanges, useMessages, useSupabaseClient } from '../../utils/supabase';
+import { realtimeChanges, useMessages } from '../../utils/supabase';
 
 export function ChatMessageSpace() {
-  const supabase = useSupabaseClient();
   const { chat, messages, addMessage, resetMessages } = useChatContext();
   const [chatMessages] = useMessages(chat);
 
+  function scrollToBottom(forceScroll = false) {
+    const space = document.getElementById('message-space-container');
+    if (space) {
+      const distanceFromBottom = space.scrollHeight - space.scrollTop - space.clientHeight;
+      // Check if the second to last child element is in view
+      const secondToLastChild = space.children[space.children.length - 2];
+      const secondToLastChildInView = secondToLastChild
+        ? secondToLastChild.getBoundingClientRect().top < space.getBoundingClientRect().bottom
+        : true;
+      const shouldScroll = distanceFromBottom < 300 || secondToLastChildInView; // only within this many px from bottom, or if the message was really long, the 2nd to last message is in view
+      if (shouldScroll || forceScroll) {
+        space.scrollTo({
+          top: space.scrollHeight,
+          behavior: 'smooth',
+        });
+      }
+    }
+  }
+
   createEffect(
     on(messages, () => {
-      const space = document.getElementById('message-space-container');
-      if (space) {
-        const distanceFromBottom = space.scrollHeight - space.scrollTop - space.clientHeight;
-        const shouldScroll = distanceFromBottom < 300; // only within this many px from bottom
-        if (shouldScroll) {
-          space.scrollTo({
-            top: space.scrollHeight,
-            behavior: 'smooth',
-          });
-        }
-      }
+      scrollToBottom();
     }),
   );
 
   createEffect(() => {
     if (!chatMessages()) return;
     resetMessages(chatMessages());
+    setTimeout(() => {
+      scrollToBottom(true);
+    }, 10);
   });
 
   createEffect(() => {

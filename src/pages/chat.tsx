@@ -23,17 +23,17 @@ export default function ChatPage() {
     <>
       {user() ? (
         <>
-          <div class="absolute left-0 right-0 top-0 z-50">
+          <div class="safe-area-top absolute left-0 right-0 top-0 z-50 bg-neutral">
             <ChatHeader />
           </div>
           <ChatSidebarWrapper>
             <div class="relative max-h-full w-full flex-1">
-              <div class="grid h-full max-h-full w-full grid-cols-1 pb-36 lg:pb-48">
+              <div class="message-container-bottom-padding-small lg:message-container-bottom-padding-large grid h-full max-h-full w-full grid-cols-1">
                 <div id="message-space-container" class="max-h-full overflow-y-auto">
                   <ChatMessageSpace />
                 </div>
               </div>
-              <div class="absolute bottom-0 left-0 right-0">
+              <div class="safe-area-bottom absolute bottom-0 left-0 right-0 bg-neutral shadow-xl">
                 <ChatInputBar />
               </div>
             </div>

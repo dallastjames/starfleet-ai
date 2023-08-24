@@ -13,7 +13,12 @@ function handleStreamedMessage(messageId: string, newText: string) {
       if (message.id === messageId) {
         return {
           ...message,
-          message_text: message.message_text + newText,
+          /**
+           * Blank characters represent a newline in the AI response, except at the very beginning
+           */
+          message_text:
+            message.message_text +
+            (newText.length ? newText : message.message_text.length ? '\n' : ''),
         };
       }
       return message;
@@ -27,7 +32,16 @@ export function useChatContext() {
     chat: currentChat,
     messages,
     addMessage: (message: Table<'chat_message'>) => {
-      if (messages().find(m => m.id === message.id)) return;
+      const existingIndex = messages().findIndex(m => m.id === message.id);
+      if (existingIndex >= 0) {
+        // If the message already exists, we'll update it here. This is useful if the streaming breaks down since the DB will send us the final message
+        setMessages(m => {
+          const newMessages = [...m];
+          newMessages[existingIndex] = message;
+          return newMessages;
+        });
+        return;
+      }
       setMessages(m => [...m, message]);
     },
     sendForResponse: async (message: Table<'chat_message'>) => {

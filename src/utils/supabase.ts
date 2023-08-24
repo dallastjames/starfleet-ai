@@ -50,10 +50,11 @@ export function useMessages(chat: Accessor<Table<'chat'> | null>) {
       .match({
         chat_id: c.id,
       })
-      .order('created_at', { ascending: true });
+      .order('created_at', { ascending: false })
+      .limit(50);
 
     if (error || !messages) return [];
-    return messages;
+    return messages.reverse();
   });
 }
 

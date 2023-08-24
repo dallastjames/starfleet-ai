@@ -68,7 +68,7 @@ export function ChatInputBar() {
   }
 
   return (
-    <div class="w-full bg-neutral px-4 py-2 shadow-xl">
+    <div class="relative w-full px-4 py-2">
       <form onSubmit={handleFormSubmit} class="flex w-full items-start gap-4">
         <textarea
           class="textarea-neutral textarea textarea-bordered h-32 flex-1 lg:h-44"

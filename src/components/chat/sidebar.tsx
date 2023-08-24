@@ -75,7 +75,7 @@ export function ChatSidebarWrapper({ children }: ParentProps) {
     <>
       <div class="drawer h-screen lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex max-h-screen flex-col items-center justify-center pt-12">
+        <div class="drawer-top-padding drawer-content flex max-h-screen flex-col items-center justify-center">
           {children}
         </div>
         <div class="drawer-side pt-12">

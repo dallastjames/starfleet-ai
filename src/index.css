@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  --safe-area-top: env(safe-area-inset-top);
+  --safe-area-bottom: env(safe-area-inset-bottom);
+  --safe-area-left: env(safe-area-inset-left);
+  --safe-area-right: env(safe-area-inset-right);
+}
+
+.safe-area-top {
+  padding-top: max(0px, var(--safe-area-top));
+}
+
+.safe-area-bottom {
+  padding-bottom: max(0px, var(--safe-area-bottom));
+}
+
+.drawer-top-padding {
+  padding-top: calc(48px + var(--safe-area-top));
+}
+
+@layer utilities {
+  .message-container-bottom-padding-small {
+    padding-bottom: calc(144px + var(--safe-area-bottom));
+  }
+
+  .message-container-bottom-padding-large {
+    padding-bottom: calc(192px + var(--safe-area-bottom));
+  }
+}

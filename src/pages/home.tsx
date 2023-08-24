@@ -47,7 +47,7 @@ export default function HomePage() {
         <div class="prose mb-4">
           <h1 class="w-full text-center">Star Fleet AI</h1>
         </div>
-        <div class="card w-96 bg-neutral shadow-xl">
+        <div class="card w-72 bg-neutral shadow-xl lg:w-96">
           <form class="card-body" onSubmit={onFormSubmit}>
             <input
               type="email"
