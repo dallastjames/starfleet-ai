@@ -11,6 +11,11 @@ const prompt = ChatPromptTemplate.fromPromptMessages([
   HumanMessagePromptTemplate.fromTemplate('{input}'),
 ]);
 
+const MODELS = {
+  'gpt-3.5': 'gpt-3.5-turbo',
+  'gpt-4': 'gpt-4',
+};
+
 serve(async req => {
   // This is needed if you're planning to invoke your function from a browser.
   if (req.method === 'OPTIONS') {
@@ -48,6 +53,7 @@ serve(async req => {
     }
 
     const adminSupabase = createAdminClient();
+    const modelName = (MODELS as any)[chat.model_name] ?? MODELS['gpt-3.5'];
 
     // Check if the request is for a streaming response.
     const streaming = req.headers.get('accept') === 'text/event-stream';
@@ -61,6 +67,7 @@ serve(async req => {
       let fullText = '';
 
       const llm = new ChatOpenAI({
+        modelName,
         streaming,
         callbackManager: CallbackManager.fromHandlers({
           handleLLMNewToken: async token => {
@@ -92,7 +99,9 @@ serve(async req => {
     } else {
       // For a non-streaming response we can just await the result of the
       // chain.run() call and return it.
-      const llm = new ChatOpenAI();
+      const llm = new ChatOpenAI({
+        modelName,
+      });
       const chain = new LLMChain({ prompt, llm });
       const response = await chain.call({ input });
 

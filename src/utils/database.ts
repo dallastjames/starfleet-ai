@@ -30,6 +30,7 @@ export interface Database {
     Tables: {
       chat: {
         Row: {
+          chat_model: Database['public']['Enums']['chat_model'];
           created_at: string | null;
           id: string;
           name: string;
@@ -37,6 +38,7 @@ export interface Database {
           user_id: string;
         };
         Insert: {
+          chat_model?: Database['public']['Enums']['chat_model'];
           created_at?: string | null;
           id?: string;
           name: string;
@@ -44,6 +46,7 @@ export interface Database {
           user_id?: string;
         };
         Update: {
+          chat_model?: Database['public']['Enums']['chat_model'];
           created_at?: string | null;
           id?: string;
           name?: string;
@@ -107,6 +110,7 @@ export interface Database {
     };
     Enums: {
       author_type: 'human' | 'ai';
+      chat_model: 'gpt-3.5' | 'gpt-4';
     };
     CompositeTypes: {
       [_ in never]: never;

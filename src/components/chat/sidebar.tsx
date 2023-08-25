@@ -7,6 +7,7 @@ import { cn } from '../../utils/tailwind';
 import { useChatContext } from './chat-context';
 import { Table, useChatList, useSupabaseClient } from '../../utils/supabase';
 import { useToast } from '../../utils/toast';
+import { ChatModel } from '../../enums';
 
 export function ChatSidebarWrapper({ children }: ParentProps) {
   const createModalId = 'create-new-chat-modal';
@@ -48,10 +49,10 @@ export function ChatSidebarWrapper({ children }: ParentProps) {
     closeDrawer();
   }
 
-  async function createNewChat(name: string) {
+  async function createNewChat(name: string, model: ChatModel.TYPE) {
     const { data: newChat, error } = await supabase
       .from('chat')
-      .insert({ name })
+      .insert({ name, chat_model: model })
       .select('*')
       .single();
     if (error) {
