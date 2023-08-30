@@ -1,28 +1,25 @@
 ## Usage
 
+### Install dependencies
+
 ```bash
-$ npm install # or pnpm install or yarn install
+$ pnpm install
 ```
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+### Build the application
 
-## Available Scripts
+```bash
+$ pnpm build
+```
 
-In the project directory, you can run:
+### Sync Capacitor
 
-### `npm run dev`
+```bash
+$ pnpm cap sync
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+### Open the IDE and run the application
 
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-Learn more about deploying your application with the [documentations](https://vitejs.dev/guide/static-deploy.html)
+```bash
+$ pnpm cap open {android/ios}
+```
