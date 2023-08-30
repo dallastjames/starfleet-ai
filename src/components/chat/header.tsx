@@ -18,9 +18,13 @@ export function ChatHeader() {
         <h3 class="mt-0 hidden lg:block">Star Fleet AI</h3>
       </div>
       <div class="absolute inset-0 z-0 flex flex-1 items-center justify-center px-4 text-center lg:relative">
-        <label>
-          {chat()?.name} ({chat()?.chat_model})
-        </label>
+        {chat() ? (
+          <label>
+            {chat()?.name} ({chat()?.chat_model})
+          </label>
+        ) : (
+          <label>Select Chat</label>
+        )}
       </div>
     </div>
   );

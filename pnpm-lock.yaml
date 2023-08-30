@@ -4,6 +4,7 @@ specifiers:
   '@capacitor/android': ^5.3.0
   '@capacitor/cli': ^5.3.0
   '@capacitor/core': ^5.3.0
+  '@capacitor/haptics': ^5.0.6
   '@capacitor/ios': ^5.3.0
   '@microsoft/fetch-event-source': ^2.0.1
   '@solidjs/router': ^0.8.3
@@ -31,6 +32,7 @@ specifiers:
 dependencies:
   '@capacitor/android': 5.3.0_@capacitor+core@5.3.0
   '@capacitor/core': 5.3.0
+  '@capacitor/haptics': 5.0.6_@capacitor+core@5.3.0
   '@capacitor/ios': 5.3.0_@capacitor+core@5.3.0
   '@microsoft/fetch-event-source': 2.0.1
   '@solidjs/router': 0.8.3_solid-js@1.7.11
@@ -446,6 +448,14 @@ packages:
     resolution: {integrity: sha512-mvhh1yJtcUTZ0hUUriBKKpxq47hn75bjxH3tYPRgAFu1z3gowCg+OtG4Rce3W5gr5fSfCjQgOSL0Vp7k9hPUWw==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@capacitor/haptics/5.0.6_@capacitor+core@5.3.0:
+    resolution: {integrity: sha512-UrMcR7p2X10ql4VLlowUuH/VckTeu0lj+RQpekxox14uxDmu5AGIFDK/iDTi8W6QZkxTJRZK6sbCjgwYgNJ7Pw==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.3.0
     dev: false
 
   /@capacitor/ios/5.3.0_@capacitor+core@5.3.0:

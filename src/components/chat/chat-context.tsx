@@ -3,11 +3,13 @@ import { Table, useSupabaseClient } from '../../utils/supabase';
 import { AuthorType } from '../../enums';
 import { createId } from '../../utils/create-id';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 const [messages, setMessages] = createSignal<Table<'chat_message'>[]>([]);
 const [currentChat, setCurrentChat] = createSignal<Table<'chat'> | null>(null);
 
 function handleStreamedMessage(messageId: string, newText: string) {
+  Haptics.impact({ style: ImpactStyle.Medium });
   setMessages(m =>
     m.map(message => {
       if (message.id === messageId) {

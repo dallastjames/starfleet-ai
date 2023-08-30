@@ -14,7 +14,7 @@ export function ChatInputBar() {
   const [inflight, setInflight] = createSignal(false);
 
   async function sendMessage() {
-    if (inflight()) return;
+    if (inflight() || !chat()) return;
     const userMessage = value();
     if (!userMessage) return;
     const chat_id = chat()?.id;
@@ -61,7 +61,7 @@ export function ChatInputBar() {
   }
 
   function checkForKeyboardSubmit(e: KeyboardEvent) {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    if (!e.shiftKey && e.key === 'Enter') {
       e.preventDefault();
       sendMessage();
     }
@@ -71,11 +71,10 @@ export function ChatInputBar() {
     <div class="relative w-full px-4 py-2">
       <form onSubmit={handleFormSubmit} class="flex w-full items-start gap-4">
         <textarea
-          class="textarea-neutral textarea textarea-bordered h-32 flex-1 lg:h-44"
+          class="textarea-neutral textarea textarea-bordered h-32 flex-1 leading-normal lg:h-44"
           value={value()}
           onInput={e => setValue(e.target.value)}
           onKeyDown={checkForKeyboardSubmit}
-          disabled={!chat()}
         />
         <button class="btn btn-primary" disabled={inflight() || !chat()}>
           <OcPaperairplane3 />
