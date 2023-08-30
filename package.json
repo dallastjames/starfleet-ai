@@ -9,8 +9,9 @@
     "preview": "vite preview",
     "supabase:link": "supabase link --project-ref $SUPABASE_PROJECT_REF -p $SUPABASE_PROJECT_PASSWORD",
     "supabase:reset": "supabase db reset && pnpm supabase:types:local",
-    "supabase:types:linked": "supabase gen types typescript --linked > src/utils/database.ts &&  pnpm pretty-types",
-    "supabase:types:local": "supabase gen types typescript --local > src/utils/database.ts && pnpm pretty-types",
+    "supabase:types:linked": "supabase gen types typescript --linked > src/utils/database.ts && pnpm pretty-types && pnpm copy:types",
+    "supabase:types:local": "supabase gen types typescript --local > src/utils/database.ts && pnpm pretty-types && pnpm copy:types",
+    "copy:types": "cp src/utils/database.ts supabase/functions/_shared/database.ts",
     "pretty-types": "prettier --write src/utils/database.ts",
     "supabase:functions:deploy": "supabase functions deploy --import-map ./supabase/functions/import-map.json"
   },

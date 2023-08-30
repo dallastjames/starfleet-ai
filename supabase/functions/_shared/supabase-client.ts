@@ -1,7 +1,8 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import { Database } from './database.ts';
 
 export function createClient(req: Request) {
-  return createSupabaseClient(
+  return createSupabaseClient<Database>(
     // Supabase API URL - env var exported by default.
     Deno.env.get('SUPABASE_URL') ?? '',
     // Supabase API ANON KEY - env var exported by default.
@@ -15,7 +16,7 @@ export function createClient(req: Request) {
 }
 
 export function createAdminClient() {
-  return createSupabaseClient(
+  return createSupabaseClient<Database>(
     // Supabase API URL - env var exported by default.
     Deno.env.get('SUPABASE_URL') ?? '',
     // Supabase API ANON KEY - env var exported by default.
