@@ -108,13 +108,11 @@ serve(async req => {
       tableName: 'chat_memory',
       queryName: 'match_memory',
     });
-    const vectorMemory = new VectorStoreRetrieverMemory({
-      vectorStoreRetriever: vectorStore.asRetriever(5),
-      memoryKey: 'vector_memory',
-    });
+
+    const vectorDocs = await vectorStore.similaritySearch(input, 5, { chat_id });
 
     const memory = new CombinedMemory({
-      memories: [bufferMemory, vectorMemory],
+      memories: [bufferMemory],
     });
 
     const PROMPT_TEMPLATE = `
@@ -125,7 +123,7 @@ serve(async req => {
     ${chat.memory_summary}
 
     Relevant pieces of previous conversation (this information may be ignored if not relevant):
-    {vector_memory}
+    ${vectorDocs?.map(d => d.pageContent).join('\n') ?? ''}
 
     Recent messages:
     {recent_messages}
@@ -177,6 +175,12 @@ serve(async req => {
               .from('chat')
               .update({ memory_summary: newMemorySummary })
               .eq('id', chat_id);
+            await vectorStore.addDocuments([
+              {
+                pageContent: `input: ${input} text: ${fullText}`,
+                metadata: { chat_id },
+              },
+            ]);
           },
           handleLLMError: async e => {
             await writer.ready;
@@ -209,6 +213,12 @@ serve(async req => {
         .from('chat')
         .update({ memory_summary: newMemorySummary })
         .eq('id', chat_id);
+      await vectorStore.addDocuments([
+        {
+          pageContent: `input: ${input} text: ${response.text}`,
+          metadata: { chat_id },
+        },
+      ]);
 
       return new Response(JSON.stringify(response), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
